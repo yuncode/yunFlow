@@ -103,6 +103,7 @@ PicList.prototype.clearPics = function() {
         clearTimeout(queueObj.timer)
     })
     self.queues = [];
+    self.boxWidth =self.getCoWidth(box);
 }
 
 PicList.prototype.destory = function() {
@@ -115,6 +116,7 @@ PicList.prototype.destory = function() {
     self.queues = [];
 
     self.addPics = null;
+    self.boxWidth =self.getCoWidth(box);
 }
 
 PicList.prototype.readys = function(pics) {
