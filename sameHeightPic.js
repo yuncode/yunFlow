@@ -8,8 +8,11 @@ var picsObj = new PicList(box,standHeight,gap)
 //picUrls 为图片地址数组,  true表示清空后插入，false（默认）为在box里追加。
 picsObj.addPics(picUrls,true)
 	
-【3】//清空图片
+【3】//box清空图片
 	picsObj.clearPics()
+
+【4】//销毁, box 未清空
+    picsObj.destory()
 */
 
 
@@ -102,6 +105,17 @@ PicList.prototype.clearPics = function() {
     self.queues = [];
 }
 
+PicList.prototype.destory = function() {
+    var self = this;
+    self.pics = [];
+    self.lefts = [];
+    self.queues.forEach(function(queueObj) {
+        clearTimeout(queueObj.timer)
+    })
+    self.queues = [];
+
+    self.addPics = null;
+}
 
 PicList.prototype.readys = function(pics) {
     var self = this;
