@@ -1,6 +1,7 @@
 # yunFlow
 图片等高瀑布流，图片横向瀑布流。 ie8 不支持。
 
+项目展示页面 https://yuncode.github.io/yunFlow/
 
 【1】创建实例 
 box 为图片盒子，standHeight 为设置基准高度。gap为图片间间隙。
