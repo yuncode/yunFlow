@@ -79,6 +79,7 @@ PicList.prototype.excuteQueue = function() {
     self.queues.forEach(function(queueObj, index) {
         if (index == 0 && queueObj.over) {
             self.readys(queueObj.pics);
+            debugger;
             self.readysResize(self.pics); // 防止撑出滚动条，需重新监测
             next = true;
         } else {
@@ -103,6 +104,7 @@ PicList.prototype.clearPics = function() {
         clearTimeout(queueObj.timer)
     })
     self.queues = [];
+    self.boxWidth =self.getCoWidth(box);
 }
 
 PicList.prototype.destory = function() {
@@ -115,6 +117,7 @@ PicList.prototype.destory = function() {
     self.queues = [];
 
     self.addPics = null;
+    self.boxWidth =self.getCoWidth(box);
 }
 
 PicList.prototype.readys = function(pics) {

@@ -25,9 +25,26 @@
         width: 50%;
         float: left;
         text-align: center;
+        position: relative;
     }
     .money img{
         width:25%;
+    }
+    .left{
+        position: absolute;
+        left: 0px;
+        width: 100px;
+    }
+    .left button{
+        display: block;
+        margin: 20px 10px;
+        cursor: pointer;
+    }
+    .right{
+                display: none;
+        position: absolute;
+        right: 0px;
+        width: calc(100% - 100px)
     }
     </style>
     <script type="text/javascript" src="sameHeightPic.js"></script>
@@ -37,16 +54,42 @@
     <div class="box" id="box" style="">
     </div>
     <div class="money">
-        <a href="https://github.com/yuncode/yunFlow"  target="_blank">项目地址 https://github.com/yuncode/yunFlow</a>
-        <br>
-        如有帮助，甚感荣幸。
-        <br>
-        <img src="zhifubao.jpg">
-        <br>
-        <img src="weixin.png">
+        <div class="left">
+            <button>追加图片1</button>
+            
+            <button>追加图片2</button>
+
+            <button>追加图片3</button>
+            <button>清空后添加图片4</button>
+            <button>清空box</button>
+        </div>
+        <div class="right">
+            <a href="https://github.com/yuncode/yunFlow"  target="_blank">项目地址 https://github.com/yuncode/yunFlow</a>
+            <br>
+            如有帮助，甚感荣幸。
+            <br>
+            <img src="zhifubao.jpg">
+            <br>
+            <img src="weixin.png">            
+        </div>
     </div>
     <script type="text/javascript">
-    var picUrls = ["http://n1.image.pg0.cn/T14IKXBKbV1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1AIEsBmAW1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1TGZLBshk1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1PVAVBs_91RCvBVdK.jpg", "http://n3.image.pg0.cn/T1yACTBKKn1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1MUW4ByZA1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1JHhaBQW_1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1tjAXBjLO1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1bLLXB5bW1RCvBVdK.jpg", "http://n4.image.pg0.cn/T12B_XBbZM1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1bhWiBjJl1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1QGAPBXC91RCvBVdK.jpg", "http://n5.image.pg0.cn/T1d7KqBQ_c1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1b4ZsB_WV1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1bPWqBXVk1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1Yt_nB4Lh1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1PT_TB7hx1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1fCxPBKEV1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1t1EsB4Kf1RCvBVdK.jpg", "http://n4.image.pg0.cn/T12SE7B_LS1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1NMLkB_DV1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1bAdSBKdz1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1e6DeBjWS1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1D8V0BvJK1RCvBVdK.jpg", "http://n1.image.pg0.cn/T13NDcBj_H1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1QJZ_BvEk1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1DPhvB4D31RCvBVdK.jpg", "http://n1.image.pg0.cn/T1HADvBsAI1RCvBVdK.jpg", "http://n5.image.pg0.cn/T11lVmBKJF1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1YyEPB5Ck1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1DKhKBgxH1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1mR_xB_Ye1RCvBVdK.jpg", "http://n3.image.pg0.cn/T12QKmB5dB1RCvBVdK.jpg", "http://n6.image.pg0.cn/T170x7B4YI1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1mKhTByLf1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1hqLeBvbq1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1mCd0BTK_1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1m4LvBXL11RCvBVdK.jpg", "http://n2.image.pg0.cn/T1yE_CB7bH1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1LaVCBTJV1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1VbbvB7bf1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1feEsB_bA1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1H9CLBgWh1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1f4Y9B7JK1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1UpEOB4Ei1RCvBVdK.jpg", "http://n1.image.pg0.cn/T138JQBvdq1RCvBVdK.jpg", "http://n4.image.pg0.cn/T15fZOB_Kn1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1P2D7B_V91RCvBVdK.jpg", "http://n2.image.pg0.cn/T1JwDQBKxc1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1__xjBb_A1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1Hw_LBTEk1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1C0Y4BKDh1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1TLCjBCE31RCvBVdK.jpg", "http://n2.image.pg0.cn/T1E1WkB5_S1RCvBVdK.jpg", "http://n2.image.pg0.cn/T168YIBbCz1RCvBVdK.jpg", "http://n3.image.pg0.cn/T150_QBCZV1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1dv_HBK_W1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1aHCyBKCA1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1rSKXBjbA1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1NDYqBQVH1RCvBVdK.jpg", "http://n4.image.pg0.cn/T11mbeB_A31RCvBVdK.jpg", "http://n3.image.pg0.cn/T1qhLAB5xt1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1XNK5BTdz1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1lZDsB5_f1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1A0ZtBbKW1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1H.WSBgdV1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1qbJvB7Vw1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1CzK7B7xS1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1g8LXB4xO1RCvBVdK.jpg", "http://n5.image.pg0.cn/T12JAnBgbc1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1fyJWB7Lc1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1JOxNB7AH1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1L9DeBKKS1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1Ut_CB5JW1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1K.djBQV91RCvBVdK.jpg", "http://n5.image.pg0.cn/T1RJxSB4Lt1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1ixCABXWW1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1tUZyB_KW1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1QOLNB7JQ1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1Jnd_BgVt1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1KZDCBbbP1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1GEZPB7YH1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1g1ZTBCWc1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1Q5bjBT_S1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1f2dsBXCA1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1MrVNBXAP1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1rZh7BK_h1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1waA_BsZI1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1aHhLBmdT1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1KgJkBy_n1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1DtbLBKhP1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1tbJkBCxk1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1vXLhBXAV1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1z0C4B5bt1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1iDLWBKAf1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1C.AyBsEO1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1LyDLB_YP1RCvBVdK.jpg", "http://n2.image.pg0.cn/T16cWOB4Zf1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1.FDjBgbN1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1PUdcBTAV1RCvBVdK.jpg", "http://n4.image.pg0.cn/T15sb3BXbQ1RCvBVdK.jpg",
+
+    var urls0 =[
+        "http://n1.image.pg0.cn/T14IKXBKbV1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1AIEsBmAW1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1TGZLBshk1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1PVAVBs_91RCvBVdK.jpg", "http://n3.image.pg0.cn/T1yACTBKKn1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1MUW4ByZA1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1JHhaBQW_1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1tjAXBjLO1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1bLLXB5bW1RCvBVdK.jpg", "http://n4.image.pg0.cn/T12B_XBbZM1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1bhWiBjJl1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1QGAPBXC91RCvBVdK.jpg", "http://n5.image.pg0.cn/T1d7KqBQ_c1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1b4ZsB_WV1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1bPWqBXVk1RCvBVdK.jpg"
+    ]
+
+    var urls1 = [
+        "http://n5.image.pg0.cn/T1QPAIBm_A1RCvBVdK.jpg",
+        "http://n5.image.pg0.cn/T1rOhTB_K11RCvBVdK.jpg",
+        "http://n2.image.pg0.cn/T1UVLkBKx71RCvBVdK.jpg"
+    ];
+    var  urls3 =[
+        "http://n6.image.pg0.cn/T1Yt_nB4Lh1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1PT_TB7hx1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1fCxPBKEV1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1t1EsB4Kf1RCvBVdK.jpg", "http://n4.image.pg0.cn/T12SE7B_LS1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1NMLkB_DV1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1bAdSBKdz1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1e6DeBjWS1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1D8V0BvJK1RCvBVdK.jpg", "http://n1.image.pg0.cn/T13NDcBj_H1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1QJZ_BvEk1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1DPhvB4D31RCvBVdK.jpg", "http://n1.image.pg0.cn/T1HADvBsAI1RCvBVdK.jpg", "http://n5.image.pg0.cn/T11lVmBKJF1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1YyEPB5Ck1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1DKhKBgxH1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1mR_xB_Ye1RCvBVdK.jpg", "http://n3.image.pg0.cn/T12QKmB5dB1RCvBVdK.jpg", "http://n6.image.pg0.cn/T170x7B4YI1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1mKhTByLf1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1hqLeBvbq1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1mCd0BTK_1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1m4LvBXL11RCvBVdK.jpg", "http://n2.image.pg0.cn/T1yE_CB7bH1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1LaVCBTJV1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1VbbvB7bf1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1feEsB_bA1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1H9CLBgWh1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1f4Y9B7JK1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1UpEOB4Ei1RCvBVdK.jpg", "http://n1.image.pg0.cn/T138JQBvdq1RCvBVdK.jpg", "http://n4.image.pg0.cn/T15fZOB_Kn1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1P2D7B_V91RCvBVdK.jpg", "http://n2.image.pg0.cn/T1JwDQBKxc1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1__xjBb_A1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1Hw_LBTEk1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1C0Y4BKDh1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1TLCjBCE31RCvBVdK.jpg", "http://n2.image.pg0.cn/T1E1WkB5_S1RCvBVdK.jpg", "http://n2.image.pg0.cn/T168YIBbCz1RCvBVdK.jpg", "http://n3.image.pg0.cn/T150_QBCZV1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1dv_HBK_W1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1aHCyBKCA1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1rSKXBjbA1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1NDYqBQVH1RCvBVdK.jpg", "http://n4.image.pg0.cn/T11mbeB_A31RCvBVdK.jpg", "http://n3.image.pg0.cn/T1qhLAB5xt1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1XNK5BTdz1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1lZDsB5_f1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1A0ZtBbKW1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1H.WSBgdV1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1qbJvB7Vw1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1CzK7B7xS1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1g8LXB4xO1RCvBVdK.jpg", "http://n5.image.pg0.cn/T12JAnBgbc1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1fyJWB7Lc1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1JOxNB7AH1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1L9DeBKKS1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1Ut_CB5JW1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1K.djBQV91RCvBVdK.jpg", "http://n5.image.pg0.cn/T1RJxSB4Lt1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1ixCABXWW1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1tUZyB_KW1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1QOLNB7JQ1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1Jnd_BgVt1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1KZDCBbbP1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1GEZPB7YH1RCvBVdK.jpg", "http://n4.image.pg0.cn/T1g1ZTBCWc1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1Q5bjBT_S1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1f2dsBXCA1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1MrVNBXAP1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1rZh7BK_h1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1waA_BsZI1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1aHhLBmdT1RCvBVdK.jpg", "http://n1.image.pg0.cn/T1KgJkBy_n1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1DtbLBKhP1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1tbJkBCxk1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1vXLhBXAV1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1z0C4B5bt1RCvBVdK.jpg", "http://n2.image.pg0.cn/T1iDLWBKAf1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1C.AyBsEO1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1LyDLB_YP1RCvBVdK.jpg", "http://n2.image.pg0.cn/T16cWOB4Zf1RCvBVdK.jpg", "http://n6.image.pg0.cn/T1.FDjBgbN1RCvBVdK.jpg", "http://n5.image.pg0.cn/T1PUdcBTAV1RCvBVdK.jpg"
+
+
+    ]
+    var urls2 = [ "http://n4.image.pg0.cn/T15sb3BXbQ1RCvBVdK.jpg",
         "http://n2.image.pg0.cn/T1ebKPBjWe1RCvBVdK.jpg",
         "http://n1.image.pg0.cn/T1IrWjByE11RCvBVdK.jpg",
         "http://n5.image.pg0.cn/T1GVx1Byxh1RCvBVdK.jpg",
@@ -69,10 +112,32 @@
         "http://n3.image.pg0.cn/T18NdLBTAy1RCvBVdK.jpg",
         "http://n2.image.pg0.cn/T1JRhOBCD41RCvBVdK.jpg"
     ]
-    var urls0 = [
-        "http://n5.image.pg0.cn/T1QPAIBm_A1RCvBVdK.jpg",
-        "http://n5.image.pg0.cn/T1rOhTB_K11RCvBVdK.jpg",
-        "http://n2.image.pg0.cn/T1UVLkBKx71RCvBVdK.jpg",
+    var urls4 = ["http://n4.image.pg0.cn/T1rz_7BCJv1RCvBVdK.jpg",
+        "http://n3.image.pg0.cn/T11rVTB5WG1RCvBVdK.jpg",
+        "http://n4.image.pg0.cn/T1u6ZgBsWD1RCvBVdK.jpg",
+        "http://n6.image.pg0.cn/T1OFdSB__V1RCvBVdK.jpg",
+        "http://n3.image.pg0.cn/T15WxSBgbi1RCvBVdK.jpg",
+        "http://n6.image.pg0.cn/T1o_ZqB7_91RCvBVdK.jpg",
+        "http://n1.image.pg0.cn/T1AK_SBbWA1RCvBVdK.jpg",
+        "http://n6.image.pg0.cn/T1SHxVByD91RCvBVdK.jpg",
+        "http://n4.image.pg0.cn/T193A0B4_T1RCvBVdK.jpg",
+        "http://n2.image.pg0.cn/T1PCW1Bb_W1RCvBVdK.jpg",
+        "http://n5.image.pg0.cn/T1OPxnB_xh1RCvBVdK.jpg",
+        "http://n1.image.pg0.cn/T1ryKUB_Ag1RCvBVdK.jpg"
+    ]
+
+    var urls5 =[
+        "http://n1.image.pg0.cn/T1mqVKBsAH1RCvBVdK.jpg",
+        "http://n2.image.pg0.cn/T1uyhVB4Di1RCvBVdK.jpg",
+        "http://n2.image.pg0.cn/T1AOWyB4Kf1RCvBVdK.jpg",
+        "http://n3.image.pg0.cn/T1rbDqBjYo1RCvBVdK.jpg",
+        "http://n5.image.pg0.cn/T1QOAGB5xC1RCvBVdK.jpg",
+        "http://n2.image.pg0.cn/T1.xLABgK51RCvBVdK.jpg",
+        "http://n3.image.pg0.cn/T1O8LQBvCl1RCvBVdK.jpg",
+        "http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg"
+    ]
+
+    var urls6 =[
         "http://n2.image.pg0.cn/T1gX_5BQJ91RCvBVdK.jpg",
         "http://n6.image.pg0.cn/T1aUA0BQC_1RCvBVdK.jpg",
         "http://n2.image.pg0.cn/T14LCjBvd91RCvBVdK.jpg",
@@ -128,37 +193,31 @@
         "http://n3.image.pg0.cn/T1J7ALBsJt1RCvBVdK.jpg",
         "http://n3.image.pg0.cn/T13TY4BsVz1RCvBVdK.jpg",
         "http://n1.image.pg0.cn/T1R_ZOBmbT1RCvBVdK.jpg"
-    ];
-    var urls = ["http://n4.image.pg0.cn/T1rz_7BCJv1RCvBVdK.jpg",
-        "http://n3.image.pg0.cn/T11rVTB5WG1RCvBVdK.jpg",
-        "http://n4.image.pg0.cn/T1u6ZgBsWD1RCvBVdK.jpg",
-        "http://n6.image.pg0.cn/T1OFdSB__V1RCvBVdK.jpg",
-        "http://n3.image.pg0.cn/T15WxSBgbi1RCvBVdK.jpg",
-        "http://n6.image.pg0.cn/T1o_ZqB7_91RCvBVdK.jpg",
-        "http://n1.image.pg0.cn/T1AK_SBbWA1RCvBVdK.jpg",
-        "http://n6.image.pg0.cn/T1SHxVByD91RCvBVdK.jpg",
-        "http://n4.image.pg0.cn/T193A0B4_T1RCvBVdK.jpg",
-        "http://n2.image.pg0.cn/T1PCW1Bb_W1RCvBVdK.jpg",
-        "http://n5.image.pg0.cn/T1OPxnB_xh1RCvBVdK.jpg",
-        "http://n1.image.pg0.cn/T1ryKUB_Ag1RCvBVdK.jpg"
+
     ]
 
-    var urls1 =[
-        "http://n1.image.pg0.cn/T1mqVKBsAH1RCvBVdK.jpg",
-        "http://n2.image.pg0.cn/T1uyhVB4Di1RCvBVdK.jpg",
-        "http://n2.image.pg0.cn/T1AOWyB4Kf1RCvBVdK.jpg",
-        "http://n3.image.pg0.cn/T1rbDqBjYo1RCvBVdK.jpg",
-        "http://n5.image.pg0.cn/T1QOAGB5xC1RCvBVdK.jpg",
-        "http://n2.image.pg0.cn/T1.xLABgK51RCvBVdK.jpg",
-        "http://n3.image.pg0.cn/T1O8LQBvCl1RCvBVdK.jpg",
-        "http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg"
-    ]
     var picsObj = new PicList(document.getElementById('box'), 100, 10)
     window.onload = function(argument) {
+         picsObj.addPics(urls0)
+
         // body...
-        picsObj.addPics(picUrls) // true 表示清空，  默认false 为追加。
-        picsObj.addPics(urls0)
-        picsObj.addPics(urls1)
+        var buttons= document.getElementsByTagName('button');
+
+        buttons[0].onclick = function(){
+            picsObj.addPics(urls1) // true 表示清空，  默认false 为追加。
+        }
+        buttons[1].onclick = function(){
+            picsObj.addPics(urls3) // true 表示清空，  默认false 为追加。
+        }
+        buttons[2].onclick = function(){
+            picsObj.addPics(urls2) // true 表示清空，  默认false 为追加。
+        }   
+        buttons[3].onclick = function(){
+            picsObj.addPics(urls4,true) // true 表示清空，  默认false 为追加。
+        }  
+        buttons[4].onclick = function(){
+            picsObj.clearPics() // true 表示清空，  默认false 为追加。
+        } 
     }
     </script>
 </body>
