@@ -9,17 +9,17 @@
 
 项目展示页面 https://yuncode.github.io/yunFlow/
 
-###【1】创建实例 ###
+# # # 【1】创建实例 
 box 为图片盒子，standHeight 为设置基准高度。gap为图片间间隙。
 
   var picsObj = new PicList(box,standHeight,gap) 
 
 
-###【2】添加图片 ###
+# # # 【2】添加图片；
 picUrls 为图片地址数组,  true表示清空后插入，false（默认）为在box里追加。 after可选，为插入图片后的回调。 
 
  picsObj.addPics(picUrls,true).after(function(wraps){// wraps 为图片的父级div数组 })
 	
-###【3】清空图片 ###
+# # # 【3】清空图片
 
   picsObj.clearPics()
