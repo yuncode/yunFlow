@@ -100,7 +100,7 @@ PicList.prototype.excuteQueue = function() {
 }
 
 PicList.prototype.getCoWidth = function(obj) {
-    return parseInt(getComputedStyle(obj, null)['width']);
+    return obj.clientWidth-2 // 修正宽度
 }
 PicList.prototype.clearPics = function() {
     var self = this;
@@ -140,8 +140,6 @@ PicList.prototype.readys = function(queueObj) {
         pic.owidth = width;
         pic.style.width = pic.owidth+'px'
     })
-
-
     for (var i = 0, length = self.lefts.length; i < length; i++) { // 添加上次残留
         pics.unshift(self.lefts[length - i - 1]);
     }
@@ -152,10 +150,9 @@ PicList.prototype.readys = function(queueObj) {
     pics.forEach(function(pic) {
         totalWidh += (pic.owidth + self.gap);
         if (totalWidh > boxWidth) {
-            var rate = (totalWidh - pic.owidth - self.gap) / boxWidth;
-
+            var rate = (totalWidh - pic.owidth - self.gap - temp.length*self.gap) / (boxWidth- temp.length*self.gap);
             temp.forEach(function(item) {
-                item.owidth = ((item.owidth + self.gap) / rate) - self.gap;
+                item.owidth = item.owidth/rate;
                 item.style.width = item.owidth+'px'
             })
             temp = [pic];
