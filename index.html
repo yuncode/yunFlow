@@ -52,7 +52,7 @@
         "http://n2.image.pg0.cn/T1JRhOBCD41RCvBVdK.jpg"
     ]
     var urls0 = [
-        "http://n5.image.pg0.cn/T1QPAIBm_A1RCvBVdK.jpg",
+/*        "http://n5.image.pg0.cn/T1QPAIBm_A1RCvBVdK.jpg",
         "http://n5.image.pg0.cn/T1rOhTB_K11RCvBVdK.jpg",
         "http://n2.image.pg0.cn/T1UVLkBKx71RCvBVdK.jpg",
         "http://n2.image.pg0.cn/T1gX_5BQJ91RCvBVdK.jpg",
@@ -100,7 +100,7 @@
         "http://n1.image.pg0.cn/T14jD8BQb51RCvBVdK.jpg",
         "http://n3.image.pg0.cn/T17bJTBKDH1RCvBVdK.jpg",
         "http://n6.image.pg0.cn/T1hKEXB5hA1RCvBVdK.jpg",
-        "http://n6.image.pg0.cn/T1tHWLBC_31RCvBVdK.jpg",
+        "http://n6.image.pg0.cn/T1tHWLBC_31RCvBVdK.jpg",*/
         "http://n2.image.pg0.cn/T1EMYPByWa1RCvBVdK.jpg",
         "http://n5.image.pg0.cn/T1Xl__B4Kw1RCvBVdK.jpg",
         "http://n3.image.pg0.cn/T1h2_XB7JI1RCvBVdK.jpg",
@@ -132,15 +132,31 @@
         "http://n3.image.pg0.cn/T1rbDqBjYo1RCvBVdK.jpg",
         "http://n5.image.pg0.cn/T1QOAGB5xC1RCvBVdK.jpg",
         "http://n2.image.pg0.cn/T1.xLABgK51RCvBVdK.jpg",
-        "http://n3.image.pg0.cn/T1O8LQBvCl1RCvBVdK.jpg",
-        "http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg"
+        "http://n3.image.pg0.cn/T1O8LQBvCl1RCvBVdK.jpg"
+        //,"http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg"
     ]
-    var picsObj = new PicList(document.getElementById('box'), 100, 10)
+    var picsObj = new PicList(document.getElementById('box'), 100, 30)
     window.onload = function(argument) {
         // body...
-        picsObj.addPics(picUrls) // true 表示清空，  默认false 为追加。
-        picsObj.addPics(urls0)
-        picsObj.addPics(urls1)
+     //   picsObj.addPics(picUrls) // true 表示清空，  默认false 为追加。
+        picsObj.addPics(urls0).after(function(divs){
+            console.log(1,divs)
+            divs.forEach(function(div){
+             //   div.style.background = "black";
+            })
+        })
+        picsObj.addPics(urls1).after(function(divs){
+            console.log(2,divs)
+            divs.forEach(function(div){
+                div.style.background = "red";
+            })
+        })
+        picsObj.addPics(urls1).after(function(divs){
+            console.log(2,divs)
+            divs.forEach(function(div){
+                div.style.background = "green";
+            })
+        })      
     }
     </script>
 </body>

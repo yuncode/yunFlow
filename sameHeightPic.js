@@ -41,12 +41,11 @@ PicList.prototype.addPics = function(picUrls, isClear) {
     if (isClear) {
         self.clearPics();
     }
-    var queueObj = { timer: null, over: false, pics: [] }
+    var queueObj = { timer: null, over: false, pics: [], picWraps:[]}
     self.queues.push(queueObj);
 
     picUrls.forEach(function(url) {
         var image = document.createElement('img');
-        image.style.padding = self.gap / 2 + 'px';
         image.src = url;
         pics.push(image);
         picChecks.push(image);
@@ -56,7 +55,7 @@ PicList.prototype.addPics = function(picUrls, isClear) {
     function check() {
         if (!picChecks.length) {
 
-            queueObj.over = true;
+            queueObj.over = true;//图片已就绪，等待插入
             queueObj.pics = pics;
 
             self.excuteQueue();
@@ -72,13 +71,21 @@ PicList.prototype.addPics = function(picUrls, isClear) {
         }
     }
     check();
+    return {
+        after:function(fn){
+            if(fn){
+                queueObj.fn = fn;
+            }
+        }
+    }
 };
 PicList.prototype.excuteQueue = function() {
     var self = this;
     var next = false;
     self.queues.forEach(function(queueObj, index) {
         if (index == 0 && queueObj.over) {
-            self.readys(queueObj.pics);
+            self.readys(queueObj); //插入box
+            queueObj.fn&&queueObj.fn(queueObj.picWraps);//执行回调;
             self.readysResize(self.pics); // 防止撑出滚动条，需重新监测
             next = true;
         } else {
@@ -119,7 +126,10 @@ PicList.prototype.destory = function() {
     self.boxWidth =self.getCoWidth(box);
 }
 
-PicList.prototype.readys = function(pics) {
+PicList.prototype.readys = function(queueObj) {
+    var pics = queueObj.pics.map(function(pic){ //对拷贝数组做修改。原pics数组不被修改。
+        return pic;
+    })
     var self = this;
     var standHeight = self.standHeight;
     var boxWidth = self.getCoWidth(self.box); //内容宽
@@ -153,9 +163,9 @@ PicList.prototype.readys = function(pics) {
         }
     })
 
-    self.lefts.forEach(function(pic) { //移除尾部上次的残留
-        self.box.removeChild(pic);
-    })
+    for (var i = 0, length = self.lefts.length; i < length; i++) { // 移出上次残留
+        pics.shift();
+    }
 
     self.lefts = [];
     temp.forEach(function(pic) { //更新本次残留
@@ -163,7 +173,14 @@ PicList.prototype.readys = function(pics) {
     })
 
     pics.forEach(function(pic) {
-        self.box.appendChild(pic)
+        var wrap = document.createElement('div');
+            wrap.style.display = "inline-block";
+            wrap.style.verticalAlign = "top";
+            wrap.style.padding = self.gap / 2 + 'px';
+            pic.style.verticalAlign = "top";
+        wrap.appendChild(pic);
+        self.box.appendChild(wrap);
+        queueObj.picWraps.push(wrap);
     })
 }
 
