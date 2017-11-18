@@ -137,7 +137,8 @@ PicList.prototype.readys = function(queueObj) {
     pics.forEach(function(pic) {
         self.pics.push(pic); //将该组的pics 插入实例的pics 中。
         var width = pic.naturalWidth / pic.naturalHeight * standHeight;
-        pic.width = width;
+        pic.owidth = width;
+        pic.style.width = pic.owidth+'px'
     })
 
 
@@ -149,15 +150,16 @@ PicList.prototype.readys = function(queueObj) {
     var totalWidh = 0;
 
     pics.forEach(function(pic) {
-        totalWidh += (pic.width + self.gap);
+        totalWidh += (pic.owidth + self.gap);
         if (totalWidh > boxWidth) {
-            var rate = (totalWidh - pic.width - self.gap) / boxWidth;
+            var rate = (totalWidh - pic.owidth - self.gap) / boxWidth;
 
             temp.forEach(function(item) {
-                item.width = ((item.width + self.gap) / rate) - self.gap;
+                item.owidth = ((item.owidth + self.gap) / rate) - self.gap;
+                item.style.width = item.owidth+'px'
             })
             temp = [pic];
-            totalWidh = pic.width + self.gap;
+            totalWidh = pic.owidth + self.gap;
             return;
         } else {
             temp.push(pic);
@@ -196,20 +198,24 @@ PicList.prototype.readysResize = function() {
 
         pics.forEach(function(pic) {
             var width = pic.naturalWidth / pic.naturalHeight * standHeight;
-            pic.width = width;
+            pic.owidth = width;
+            pic.style.width = pic.owidth+'px'
         })
         var temp = [];
         var totalWidh = 0;
         pics.forEach(function(pic) {
-            totalWidh += (pic.width + self.gap);
+            totalWidh += (pic.owidth + self.gap);
             if (totalWidh > boxWidth) {
 
-                var rate = (totalWidh - pic.width - self.gap) / boxWidth;
+                var rate = (totalWidh - pic.owidth - self.gap - temp.length*self.gap) / (boxWidth- temp.length*self.gap);
                 temp.forEach(function(item) {
-                    item.width = ((item.width + self.gap) / rate) - self.gap;
+
+
+                    item.owidth = item.owidth/rate;
+                    item.style.width = item.owidth+'px'
                 })
                 temp = [pic];
-                totalWidh = pic.width + self.gap;
+                totalWidh = pic.owidth + self.gap;
                 return;
             } else {
                 temp.push(pic);
