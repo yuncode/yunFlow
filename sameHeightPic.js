@@ -8,15 +8,13 @@ var picsObj = new PicList(box,standHeight,gap)
     picUrls 为图片地址数组,  true表示清空后插入，false（默认）为在box里追加。 after可选，为插入图片后的回调。 
 
     picsObj.addPics(picUrls,true).after(function(wraps){// wraps 为图片的父级div数组 })
-	
+    
 【3】//box清空图片
-	picsObj.clearPics()
+    picsObj.clearPics()
 
 【4】//销毁, box 未清空
     picsObj.destory()
 */
-
-
 
 
 function PicList(box, standHeight, gap) {
@@ -30,10 +28,11 @@ function PicList(box, standHeight, gap) {
 
     self.queues = [];
 
-    function resize(){
-    	self.readysResize();
+    function resize() {
+        self.readysResize();
     }
-    window.addEventListener('resize',resize, false);
+    addEvent(window, 'resize', resize)
+    self.resize = resize;
 }
 PicList.prototype.addPics = function(picUrls, isClear) {
     var self = this;
@@ -42,21 +41,33 @@ PicList.prototype.addPics = function(picUrls, isClear) {
     if (isClear) {
         self.clearPics();
     }
-    var queueObj = { timer: null, over: false, pics: [], picWraps:[]}
+    var queueObj = { timer: null, over: false, pics: [], picWraps: [] }
     self.queues.push(queueObj);
 
-    picUrls.forEach(function(url) {
+    picUrls.forEach(function(url,index) {
         var image = document.createElement('img');
         image.src = url;
         pics.push(image);
         picChecks.push(image);
+        image.onerror=function(){
+            picChecks.forEach(function(img,index){
+                if(img== image){
+                    picChecks.splice(index, 1);
+                }
+            })
+            pics.forEach(function(img,index){
+                if(img== image){
+                    pics.splice(index, 1);
+                }
+            })
+        }
     })
 
     // 定时执行获取宽高
     function check() {
         if (!picChecks.length) {
 
-            queueObj.over = true;//图片已就绪，等待插入
+            queueObj.over = true; //图片已就绪，等待插入
             queueObj.pics = pics;
 
             self.excuteQueue();
@@ -65,6 +76,7 @@ PicList.prototype.addPics = function(picUrls, isClear) {
         } else {
             picChecks.forEach(function(img, index) {
                 if (img.width > 0 || img.height > 0) { // 只要任何一方大于0,表示已经服务器已经返回宽高
+                    img.oRate = img.width / img.height;
                     picChecks.splice(index, 1);
                 }
             })
@@ -73,8 +85,8 @@ PicList.prototype.addPics = function(picUrls, isClear) {
     }
     check();
     return {
-        after:function(fn){
-            if(fn){
+        after: function(fn) {
+            if (fn) {
                 queueObj.fn = fn;
             }
         }
@@ -86,7 +98,7 @@ PicList.prototype.excuteQueue = function() {
     self.queues.forEach(function(queueObj, index) {
         if (index == 0 && queueObj.over) {
             self.readys(queueObj); //插入box
-            queueObj.fn&&queueObj.fn(queueObj.picWraps);//执行回调;
+            queueObj.fn && queueObj.fn(queueObj.picWraps); //执行回调;
             self.readysResize(self.pics); // 防止撑出滚动条，需重新监测
             next = true;
         } else {
@@ -100,7 +112,7 @@ PicList.prototype.excuteQueue = function() {
 }
 
 PicList.prototype.getCoWidth = function(obj) {
-    return parseInt(getComputedStyle(obj, null)['width']);
+    return obj.clientWidth - 2 // 修正clientWidth宽度
 }
 PicList.prototype.clearPics = function() {
     var self = this;
@@ -111,7 +123,7 @@ PicList.prototype.clearPics = function() {
         clearTimeout(queueObj.timer)
     })
     self.queues = [];
-    self.boxWidth =self.getCoWidth(box);
+    self.boxWidth = self.getCoWidth(box);
 }
 
 PicList.prototype.destory = function() {
@@ -124,24 +136,25 @@ PicList.prototype.destory = function() {
     self.queues = [];
 
     self.addPics = null;
-    self.boxWidth =self.getCoWidth(box);
+    self.boxWidth = self.getCoWidth(box);
+    window.remveEventListener('resize', self.resize);
 }
 
 PicList.prototype.readys = function(queueObj) {
-    var pics = queueObj.pics.map(function(pic){ //对拷贝数组做修改。原pics数组不被修改。
-        return pic;
+    var pics = []
+    queueObj.pics.forEach(function(pic) { //对拷贝数组做修改。原pics数组不被修改。
+        pics.push(pic);
     })
     var self = this;
     var standHeight = self.standHeight;
     var boxWidth = self.getCoWidth(self.box); //内容宽
     pics.forEach(function(pic) {
         self.pics.push(pic); //将该组的pics 插入实例的pics 中。
-        var width = pic.naturalWidth / pic.naturalHeight * standHeight;
+        var width = pic.oRate * standHeight;
         pic.owidth = width;
-        pic.style.width = pic.owidth+'px'
+        pic.style.width = pic.owidth + 'px';
+        pic.style.height = pic.owidth / pic.oRate + 'px';
     })
-
-
     for (var i = 0, length = self.lefts.length; i < length; i++) { // 添加上次残留
         pics.unshift(self.lefts[length - i - 1]);
     }
@@ -152,11 +165,11 @@ PicList.prototype.readys = function(queueObj) {
     pics.forEach(function(pic) {
         totalWidh += (pic.owidth + self.gap);
         if (totalWidh > boxWidth) {
-            var rate = (totalWidh - pic.owidth - self.gap) / boxWidth;
-
+            var rate = (totalWidh - pic.owidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
             temp.forEach(function(item) {
-                item.owidth = ((item.owidth + self.gap) / rate) - self.gap;
-                item.style.width = item.owidth+'px'
+                item.owidth = item.owidth / rate;
+                item.style.width = item.owidth + 'px';
+                item.style.height = item.owidth / item.oRate + 'px';
             })
             temp = [pic];
             totalWidh = pic.owidth + self.gap;
@@ -177,10 +190,10 @@ PicList.prototype.readys = function(queueObj) {
 
     pics.forEach(function(pic) {
         var wrap = document.createElement('div');
-            wrap.style.display = "inline-block";
-            wrap.style.verticalAlign = "top";
-            wrap.style.padding = self.gap / 2 + 'px';
-            pic.style.verticalAlign = "top";
+        wrap.style.display = "inline-block";
+        wrap.style.verticalAlign = "top";
+        wrap.style.padding = self.gap / 2 + 'px';
+        pic.style.verticalAlign = "top";
         wrap.appendChild(pic);
         self.box.appendChild(wrap);
         queueObj.picWraps.push(wrap);
@@ -189,6 +202,9 @@ PicList.prototype.readys = function(queueObj) {
 
 PicList.prototype.readysResize = function() {
     var self = this;
+    if (!self.pics.length) {
+        return;
+    }
     var width = self.getCoWidth(self.box);
     if (width !== self.boxWidth) {
         self.boxWidth = width;
@@ -197,9 +213,10 @@ PicList.prototype.readysResize = function() {
         var boxWidth = self.boxWidth; //内容宽
 
         pics.forEach(function(pic) {
-            var width = pic.naturalWidth / pic.naturalHeight * standHeight;
+            var width = pic.oRate * standHeight;
             pic.owidth = width;
-            pic.style.width = pic.owidth+'px'
+            pic.style.width = pic.owidth + 'px';
+            pic.style.height = pic.owidth / pic.oRate + 'px';
         })
         var temp = [];
         var totalWidh = 0;
@@ -207,12 +224,13 @@ PicList.prototype.readysResize = function() {
             totalWidh += (pic.owidth + self.gap);
             if (totalWidh > boxWidth) {
 
-                var rate = (totalWidh - pic.owidth - self.gap - temp.length*self.gap) / (boxWidth- temp.length*self.gap);
+                var rate = (totalWidh - pic.owidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
                 temp.forEach(function(item) {
 
 
-                    item.owidth = item.owidth/rate;
-                    item.style.width = item.owidth+'px'
+                    item.owidth = item.owidth / rate;
+                    item.style.width = item.owidth + 'px';
+                    item.style.height = item.owidth / item.oRate + 'px';
                 })
                 temp = [pic];
                 totalWidh = pic.owidth + self.gap;
@@ -228,4 +246,47 @@ PicList.prototype.readysResize = function() {
 
     }
 
+}
+
+if (!Array.prototype.forEach) {
+
+    Array.prototype.forEach = function forEach(callback, thisArg) {
+
+        var T, k;
+
+        if (this == null) {
+            throw new TypeError("this is null or not defined");
+        }
+        var O = Object(this);
+        var len = O.length >>> 0;
+        if (typeof callback !== "function") {
+            throw new TypeError(callback + " is not a function");
+        }
+        if (arguments.length > 1) {
+            T = thisArg;
+        }
+        k = 0;
+
+        while (k < len) {
+
+            var kValue;
+            if (k in O) {
+
+                kValue = O[k];
+                callback.call(T, kValue, k, O);
+            }
+            k++;
+        }
+    };
+}
+
+function addEvent(obj, sEv, fn) {
+    if (obj.addEventListener) {
+        obj.addEventListener(sEv, fn, false);
+    } else {
+        obj.attachEvent('on' + sEv, function() { //此函数this 指向window
+            fn.call(obj);
+        });
+        //obj.attachEvent('on'+sEv, fn);
+    }
 }
