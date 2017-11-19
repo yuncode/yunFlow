@@ -44,11 +44,23 @@ PicList.prototype.addPics = function(picUrls, isClear) {
     var queueObj = { timer: null, over: false, pics: [], picWraps: [] }
     self.queues.push(queueObj);
 
-    picUrls.forEach(function(url) {
+    picUrls.forEach(function(url,index) {
         var image = document.createElement('img');
         image.src = url;
         pics.push(image);
         picChecks.push(image);
+        image.onerror=function(){
+            picChecks.forEach(function(img,index){
+                if(img== image){
+                    picChecks.splice(index, 1);
+                }
+            })
+            pics.forEach(function(img,index){
+                if(img== image){
+                    pics.splice(index, 1);
+                }
+            })
+        }
     })
 
     // 定时执行获取宽高
@@ -100,7 +112,7 @@ PicList.prototype.excuteQueue = function() {
 }
 
 PicList.prototype.getCoWidth = function(obj) {
-    return obj.clientWidth - 2 // 修正宽度
+    return obj.clientWidth - 2 // 修正clientWidth宽度
 }
 PicList.prototype.clearPics = function() {
     var self = this;
