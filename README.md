@@ -14,7 +14,7 @@
 
 ### 【1】创建实例 
 `var picsObj = new PicList(box,standHeight,gap) `  
-box 为图片盒子，standHeight 为设置基准高度。gap为图片间间隙。
+box 为图片盒子dom ，standHeight 为设置基准高度。gap为图片间间隙。 px为单位。
 
 
 
