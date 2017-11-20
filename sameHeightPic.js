@@ -20,9 +20,9 @@ var picsObj = new PicList(box,standHeight,gap)
 function PicList(box, standHeight, gap) {
     var self = this;
     self.pics = []; //已插入box 的图片
-    self.standHeight = standHeight || 150;
+    self.standHeight = parseInt(standHeight || 150);
     self.box = box;
-    self.gap = gap || 10;
+    self.gap = parseInt(gap || 10);
     self.boxWidth = self.getCoWidth(box);
     self.lefts = [];
 
