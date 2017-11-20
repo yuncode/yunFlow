@@ -28,6 +28,7 @@ function PicList(box, standHeight, gap) {
 
     self.queues = [];
 
+    self.maxWidth = 500;
     function resize() {
         self.readysResize();
     }
@@ -44,19 +45,19 @@ PicList.prototype.addPics = function(picUrls, isClear) {
     var queueObj = { timer: null, over: false, pics: [], picWraps: [] }
     self.queues.push(queueObj);
 
-    picUrls.forEach(function(url,index) {
+    picUrls.forEach(function(url, index) {
         var image = document.createElement('img');
         image.src = url;
         pics.push(image);
         picChecks.push(image);
-        image.onerror=function(){
-            picChecks.forEach(function(img,index){
-                if(img== image){
+        image.onerror = function() {
+            picChecks.forEach(function(img, index) {
+                if (img == image) {
                     picChecks.splice(index, 1);
                 }
             })
-            pics.forEach(function(img,index){
-                if(img== image){
+            pics.forEach(function(img, index) {
+                if (img == image) {
                     pics.splice(index, 1);
                 }
             })
@@ -76,7 +77,9 @@ PicList.prototype.addPics = function(picUrls, isClear) {
         } else {
             picChecks.forEach(function(img, index) {
                 if (img.width > 0 || img.height > 0) { // 只要任何一方大于0,表示已经服务器已经返回宽高
-                    img.oRate = img.width / img.height;
+                    img.ogRate = img.width / img.height;
+                    img.ogWidth = img.width;
+                    img.ogHeight = img.height;
                     picChecks.splice(index, 1);
                 }
             })
@@ -150,12 +153,33 @@ PicList.prototype.readys = function(queueObj) {
     var boxWidth = self.getCoWidth(self.box); //内容宽
     pics.forEach(function(pic) {
         self.pics.push(pic); //将该组的pics 插入实例的pics 中。
-        var width = pic.oRate * standHeight;
-        pic.owidth = width;
-        pic.style.width = pic.owidth + 'px';
-        pic.style.height = pic.owidth / pic.oRate + 'px';
+
+        if (pic.ogWidth < standHeight || pic.ogHeight < standHeight) {
+            pic.wRate = 1;
+            pic.noScale = true;
+        } else {
+            pic.wRate = pic.ogRate;
+            pic.noScale = false;
+        }
+
+        var width = pic.wRate * standHeight;
+
+        if (width < 100) {
+            width = 100;
+            pic.wRate = width / standHeight;
+        }
+
+        if (width > self.maxWidth) {
+            width = self.maxWidth
+            pic.wRate = width / standHeight;
+        }
+
+        pic.wWidth = width;
+        pic.wHeight = pic.wWidth / pic.wRate;
+
     })
-    for (var i = 0, length = self.lefts.length; i < length; i++) { // 添加上次残留
+
+    for (var i = 0, length = self.lefts.length; i < length; i++) { //添加上次残留
         pics.unshift(self.lefts[length - i - 1]);
     }
 
@@ -163,24 +187,30 @@ PicList.prototype.readys = function(queueObj) {
     var totalWidh = 0;
 
     pics.forEach(function(pic) {
-        totalWidh += (pic.owidth + self.gap);
+        totalWidh += (pic.wWidth + self.gap);
         if (totalWidh > boxWidth) {
-            var rate = (totalWidh - pic.owidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
+            var rate = (totalWidh - pic.wWidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
+
             temp.forEach(function(item) {
-                item.owidth = item.owidth / rate;
-                item.style.width = item.owidth + 'px';
-                item.style.height = item.owidth / item.oRate + 'px';
+                item.wWidth = item.wWidth / rate;
+                item.wHeight = item.wWidth / item.wRate;
             })
+
             temp = [pic];
-            totalWidh = pic.owidth + self.gap;
+            totalWidh = pic.wWidth + self.gap;
             return;
         } else {
             temp.push(pic);
         }
     })
 
-    for (var i = 0, length = self.lefts.length; i < length; i++) { // 移出上次残留
+    for (var i = 0, length = self.lefts.length; i < length; i++) { // 移出上次残留, 并且设置父级的宽高
         pics.shift();
+        var item = self.lefts[i];
+        item.parentNode.style.maxWidth = self.boxWidth - self.gap + 'px'
+        item.parentNode.style.width = item.wWidth + 'px';
+        item.parentNode.style.height = item.wHeight + 'px';
+        item.parentNode.style.lineHeight = item.wHeight + 'px';
     }
 
     self.lefts = [];
@@ -190,18 +220,32 @@ PicList.prototype.readys = function(queueObj) {
 
     pics.forEach(function(pic) {
         var wrap = document.createElement('div');
+        wrap.appendChild(pic);       
         wrap.style.display = "inline-block";
+        wrap.style.textAlign ="center";
         wrap.style.verticalAlign = "top";
         wrap.style.padding = self.gap / 2 + 'px';
-        pic.style.verticalAlign = "top";
-        wrap.appendChild(pic);
+        wrap.style.width = pic.wWidth + 'px';
+        wrap.style.height = pic.wHeight + 'px';
+        wrap.style.lineHeight = pic.wHeight + 'px';
+        wrap.style.maxWidth = self.boxWidth - self.gap + 'px'
+
+        pic.style.verticalAlign = "middle";
+        if (!pic.noScale) {
+            
+        }
+        pic.style.maxWidth = '100%';
+        pic.style.maxHeight = '100%';
+
         self.box.appendChild(wrap);
         queueObj.picWraps.push(wrap);
     })
 }
 
 PicList.prototype.readysResize = function() {
+
     var self = this;
+   
     if (!self.pics.length) {
         return;
     }
@@ -213,27 +257,28 @@ PicList.prototype.readysResize = function() {
         var boxWidth = self.boxWidth; //内容宽
 
         pics.forEach(function(pic) {
-            var width = pic.oRate * standHeight;
-            pic.owidth = width;
-            pic.style.width = pic.owidth + 'px';
-            pic.style.height = pic.owidth / pic.oRate + 'px';
+            var width = pic.wRate * standHeight;
+            pic.wWidth = width;
+            pic.wHeight = pic.wWidth / pic.wRate;
         })
         var temp = [];
         var totalWidh = 0;
         pics.forEach(function(pic) {
-            totalWidh += (pic.owidth + self.gap);
+            totalWidh += (pic.wWidth + self.gap);
             if (totalWidh > boxWidth) {
+                var rate = (totalWidh - pic.wWidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
 
-                var rate = (totalWidh - pic.owidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
                 temp.forEach(function(item) {
-
-
-                    item.owidth = item.owidth / rate;
-                    item.style.width = item.owidth + 'px';
-                    item.style.height = item.owidth / item.oRate + 'px';
+                    item.wWidth = item.wWidth / rate;
+                    item.wHeight = item.wWidth / item.wRate;
+                    item.parentNode.style.maxWidth = self.boxWidth - self.gap + 'px';
+                    item.parentNode.style.width = item.wWidth + 'px';
+                    item.parentNode.style.height = item.wHeight + 'px';
+                    item.parentNode.style.lineHeight = item.wHeight + 'px';
                 })
+
                 temp = [pic];
-                totalWidh = pic.owidth + self.gap;
+                totalWidh = pic.wWidth + self.gap;
                 return;
             } else {
                 temp.push(pic);
@@ -242,10 +287,13 @@ PicList.prototype.readysResize = function() {
         self.lefts = [];
         temp.forEach(function(pic) { //更新本次残留
             self.lefts.push(pic)
+            pic.parentNode.style.maxWidth = self.boxWidth - self.gap + 'px'
+            pic.parentNode.style.width = pic.wWidth + 'px';
+            pic.parentNode.style.height = pic.wHeight + 'px';
+            pic.parentNode.style.lineHeight = pic.wHeight + 'px';
         })
 
     }
-
 }
 
 if (!Array.prototype.forEach) {
