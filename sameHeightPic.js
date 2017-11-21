@@ -28,7 +28,7 @@ function PicList(box, standHeight, gap) {
 
     self.queues = [];
 
-    self.maxWidth = 500;
+    self.maxWidth = 500;//长图阈值。
     function resize() {
         self.readysResize();
     }
@@ -165,6 +165,7 @@ PicList.prototype.readys = function(queueObj) {
         var width = pic.wRate * standHeight;
 
         if (width < 100) {
+            pic.noScale = true;
             width = 100;
             pic.wRate = width / standHeight;
         }
@@ -189,15 +190,27 @@ PicList.prototype.readys = function(queueObj) {
     pics.forEach(function(pic) {
         totalWidh += (pic.wWidth + self.gap);
         if (totalWidh > boxWidth) {
-            var rate = (totalWidh - pic.wWidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
 
-            temp.forEach(function(item) {
-                item.wWidth = item.wWidth / rate;
-                item.wHeight = item.wWidth / item.wRate;
-            })
+            if(temp.length==1&& temp[0].noScale&&temp[0].wWidth<(2*boxWidth/3)){ // 一张小图 和长图碰撞，则放一行。防止只有小图占一行导致布局丑陋
 
-            temp = [pic];
-            totalWidh = pic.wWidth + self.gap;
+                pic.wWidth = boxWidth-  temp[0].wWidth - 2*self.gap;
+
+                temp =[];
+                totalWidh =0;
+
+            }else{
+                var rate = (totalWidh - pic.wWidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
+
+                temp.forEach(function(item) {
+                    item.wWidth = item.wWidth / rate;
+                    item.wHeight = item.wWidth / item.wRate;
+                })
+
+                temp = [pic];
+                totalWidh = pic.wWidth + self.gap;
+
+            }
+
             return;
         } else {
             temp.push(pic);
@@ -231,9 +244,6 @@ PicList.prototype.readys = function(queueObj) {
         wrap.style.maxWidth = self.boxWidth - self.gap + 'px'
 
         pic.style.verticalAlign = "middle";
-        if (!pic.noScale) {
-            
-        }
         pic.style.maxWidth = '100%';
         pic.style.maxHeight = '100%';
 
@@ -266,19 +276,38 @@ PicList.prototype.readysResize = function() {
         pics.forEach(function(pic) {
             totalWidh += (pic.wWidth + self.gap);
             if (totalWidh > boxWidth) {
-                var rate = (totalWidh - pic.wWidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
 
-                temp.forEach(function(item) {
-                    item.wWidth = item.wWidth / rate;
-                    item.wHeight = item.wWidth / item.wRate;
-                    item.parentNode.style.maxWidth = self.boxWidth - self.gap + 'px';
-                    item.parentNode.style.width = item.wWidth + 'px';
-                    item.parentNode.style.height = item.wHeight + 'px';
-                    item.parentNode.style.lineHeight = item.wHeight + 'px';
-                })
+                if(temp.length==1&& temp[0].noScale&&temp[0].wWidth<(2*boxWidth/3)){
 
-                temp = [pic];
-                totalWidh = pic.wWidth + self.gap;
+                    pic.wWidth = boxWidth-  temp[0].wWidth - 2*self.gap;
+                    temp.push(pic);
+
+                    temp.forEach(function(item) {
+                        item.parentNode.style.maxWidth = self.boxWidth - self.gap + 'px';
+                        item.parentNode.style.width = item.wWidth + 'px';
+                        item.parentNode.style.height = item.wHeight + 'px';
+                        item.parentNode.style.lineHeight = item.wHeight + 'px';
+                    })
+
+
+                    temp =[];
+                    totalWidh =0;
+
+                }else{
+                    var rate = (totalWidh - pic.wWidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
+
+                    temp.forEach(function(item) {
+                        item.wWidth = item.wWidth / rate;
+                        item.wHeight = item.wWidth / item.wRate;
+                        item.parentNode.style.maxWidth = self.boxWidth - self.gap + 'px';
+                        item.parentNode.style.width = item.wWidth + 'px';
+                        item.parentNode.style.height = item.wHeight + 'px';
+                        item.parentNode.style.lineHeight = item.wHeight + 'px';
+                    })
+
+                    temp = [pic];
+                    totalWidh = pic.wWidth + self.gap;                
+                }
                 return;
             } else {
                 temp.push(pic);
