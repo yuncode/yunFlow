@@ -19,6 +19,7 @@
         width: 50%;
         height: 500px;
         overflow-y: auto;
+        overflow-x: hidden;
         float: left;
     }
     .money{
@@ -41,7 +42,7 @@
         cursor: pointer;
     }
     .right{
-        /*display: none;*/
+        display: none;
         position: absolute;
         right: 0px;
         width: calc(100% - 100px)
@@ -57,10 +58,11 @@
         <div class="left">
             <button>追加图片1</button>
             
-            <button>追加图片2</button>
+            <button>追加图片2,插入后回调里做事(设置父级样式)</button>
 
             <button>追加图片3</button>
             <button>清空后添加图片4</button>
+            <button>插入小 长 宽 怪图</button>
             <button>清空box</button>
         </div>
         <div class="right">
@@ -81,7 +83,7 @@
 
     var urls1 = [
         "http://n5.image.pg0.cn/T1QPAIBm_A1RCvBVdK.jpg",
-        "http://n5.image.pg0.cn/T1rOhTB_K11RCvBVdK.jpg",
+        "http://n5.image.pg0.cn/T1rOhTB_K11RCvBVdK.jpg","x1.jpg",
         "http://n2.image.pg0.cn/T1UVLkBKx71RCvBVdK.jpg"
     ];
     var  urls3 =[
@@ -99,11 +101,11 @@
         "http://n2.image.pg0.cn/T1ZSZcBThl1RCvBVdK.jpg",
         "http://n4.image.pg0.cn/T1xib7B_dc1RCvBVdK.jpg",
         "http://n2.image.pg0.cn/T12IWHBsCz1RCvBVdK.jpg",
-        "http://n6.image.pg0.cn/T1eOCjBQdv1RCvBVdK.jpg",
+        "http://n6.image.pg0.cn/T1eOCjBQdv1RCvBVdK.jpg","c1.jpg",
         "http://n5.image.pg0.cn/T1FsbzBvxI1RCvBVdK.jpg",
         "http://n2.image.pg0.cn/T1RwYABgJm1RCvBVdK.jpg",
         "http://n6.image.pg0.cn/T1XRVLBmxP1RCvBVdK.jpg",
-        "http://n1.image.pg0.cn/T1Ezx0Bvhm1RCvBVdK.jpg",
+        "http://n1.image.pg0.cn/T1Ezx0Bvhm1RCvBVdK.jpg","k1.jpg",
         "http://n6.image.pg0.cn/T1RACzB7JA1RCvBVdK.jpg",
         "http://n1.image.pg0.cn/T14H_eBsxC1RCvBVdK.jpg",
         "http://n5.image.pg0.cn/T1R3YPBQA71RCvBVdK.jpg",
@@ -196,6 +198,16 @@
 
     ]
 
+    var urls7 =["x5.jpg",
+        "http://n1.image.pg0.cn/222T1mqVKBsAH1RCvBVdK222.jpg",
+        "http://n2.image.pg0.cn/T1uyhVB4Di1RCvBVdK.jpg",
+        "http://n2.image.pg0.cn/T1AOWyB4Kf1RCvBVdK.jpg","c3.jpg","k1.jpg","k1.jpg","x1.jpg","x2.jpg","c3.jpg","c3.jpg","k1.jpg","c3.jpg","c3.jpg","x3.jpg","x4.jpg",
+        "http://n3.image.pg0.cn/T1rbDqBjYo1RCvBVdK.jpg",
+        "http://n5.image.pg0.cn/T1QOAGB5xC1RCvBVdK.jpg","c2.jpg","c2.jpg","k1.jpg","c2.jpg","c2.jpg","c2.jpg","x1.jpg",
+        "http://n2.image.pg0.cn/T1.xLABgK51RCvBVdK.jpg","x4.jpg",
+        "http://n3.image.pg0.cn/T1O8LQBvCl1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg"
+
+    ];
     var picsObj = new PicList(document.getElementById('box'), 100, 10)
     window.onload = function(argument) {
          picsObj.addPics(urls0)
@@ -207,7 +219,11 @@
             picsObj.addPics(urls1) // true 表示清空，  默认false 为追加。
         }
         buttons[1].onclick = function(){
-            picsObj.addPics(urls3) // true 表示清空，  默认false 为追加。
+            picsObj.addPics(urls1).after(function(divs){
+                divs.forEach(function(div){
+                    div.style.background = "green"
+                })
+            }) // true 表示清空，  默认false 为追加。
         }
         buttons[2].onclick = function(){
             picsObj.addPics(urls2) // true 表示清空，  默认false 为追加。
@@ -216,8 +232,12 @@
             picsObj.addPics(urls4,true) // true 表示清空，  默认false 为追加。
         }  
         buttons[4].onclick = function(){
+            picsObj.addPics(urls7) 
+        }        
+        buttons[5].onclick = function(){
             picsObj.clearPics() // true 表示清空，  默认false 为追加。
         } 
+
     }
     </script>
 </body>
