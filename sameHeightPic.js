@@ -242,7 +242,7 @@ PicList.prototype.readys = function(queueObj) {
         wrap.style.height = pic.wHeight + 'px';
         wrap.style.lineHeight = pic.wHeight + 'px';
         wrap.style.maxWidth = self.boxWidth - self.gap + 'px'
-
+        wrap.style.fontSize = '0px';
         pic.style.verticalAlign = "middle";
         pic.style.maxWidth = '100%';
         pic.style.maxHeight = '100%';
@@ -260,6 +260,7 @@ PicList.prototype.readysResize = function() {
         return;
     }
     var width = self.getCoWidth(self.box);
+    
     if (width !== self.boxWidth) {
         self.boxWidth = width;
         var pics = self.pics;
@@ -288,8 +289,6 @@ PicList.prototype.readysResize = function() {
                         item.parentNode.style.height = item.wHeight + 'px';
                         item.parentNode.style.lineHeight = item.wHeight + 'px';
                     })
-
-
                     temp =[];
                     totalWidh =0;
 
@@ -321,7 +320,8 @@ PicList.prototype.readysResize = function() {
             pic.parentNode.style.height = pic.wHeight + 'px';
             pic.parentNode.style.lineHeight = pic.wHeight + 'px';
         })
-
+    }else{
+        return;
     }
 }
 
@@ -366,4 +366,15 @@ function addEvent(obj, sEv, fn) {
         });
         //obj.attachEvent('on'+sEv, fn);
     }
+}
+
+
+function getScrollWidth() {
+  var noScroll, scroll, oDiv = document.createElement("DIV");
+  oDiv.style.cssText = "position:absolute; top:-1000px; width:100px; height:100px; overflow:hidden;";
+  noScroll = document.body.appendChild(oDiv).clientWidth;
+  oDiv.style.overflowY = "scroll";
+  scroll = oDiv.clientWidth;
+  document.body.removeChild(oDiv);
+  return noScroll-scroll;
 }
