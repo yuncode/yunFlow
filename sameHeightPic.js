@@ -144,16 +144,23 @@ PicList.prototype.destory = function() {
 }
 
 PicList.prototype.readys = function(queueObj) {
+     var self = this;   
     var pics = []
+
+
     queueObj.pics.forEach(function(pic) { //对拷贝数组做修改。原pics数组不被修改。
+        self.pics.push(pic); //将该组的pics 插入实例的pics 中。
         pics.push(pic);
     })
-    var self = this;
+
+    for (var i = 0, length = self.lefts.length; i < length; i++) { //添加上次残留
+        pics.unshift(self.lefts[length - i - 1]);
+    }
+
+
     var standHeight = self.standHeight;
     var boxWidth = self.getCoWidth(self.box); //内容宽
     pics.forEach(function(pic) {
-        self.pics.push(pic); //将该组的pics 插入实例的pics 中。
-
         if (pic.ogWidth < standHeight || pic.ogHeight < standHeight) {
             pic.wRate = 1;
             pic.noScale = true;
@@ -180,9 +187,6 @@ PicList.prototype.readys = function(queueObj) {
 
     })
 
-    for (var i = 0, length = self.lefts.length; i < length; i++) { //添加上次残留
-        pics.unshift(self.lefts[length - i - 1]);
-    }
 
     var temp = [];
     var totalWidh = 0;
@@ -320,6 +324,12 @@ PicList.prototype.readysResize = function() {
             pic.parentNode.style.height = pic.wHeight + 'px';
             pic.parentNode.style.lineHeight = pic.wHeight + 'px';
         })
+        var width = self.getCoWidth(self.box);
+        if(self.boxWidth<width){
+            self.boxWidth = width;
+        }else{
+            self.readysResize();
+        }
     }else{
         return;
     }
