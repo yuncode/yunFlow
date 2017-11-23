@@ -14,9 +14,9 @@
 ### 【1】创建实例 
 `var picsObj = new PicList(box,standHeight,gap) `  
     
-	* box 为图片盒子，     
-	* standHeight 为设置基准高度。     
-	* gap为图片间间隙。    
+	*box 为图片盒子，     
+	*standHeight 为设置基准高度。     
+	*gap为图片间间隙。    
 
 
 
@@ -25,8 +25,9 @@
 	// wraps 为图片的父级div数组     
 })`      
      
-	* picUrls 为图片地址数组,  true表示清空后插入，false（默认）为在box里追加。        
-	* after可选，为插入图片后的回调。     
+	*picUrls 为图片地址数组。
+	*true表示清空后插入，false（默认）为在box里追加。        
+	*after可选，为插入图片后的回调。     
 
 
 	
