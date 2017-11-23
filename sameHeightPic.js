@@ -32,7 +32,7 @@ function PicList(box, standHeight, gap) {
     function resize() {
         self.readysResize();
     }
-    addEvent(window, 'resize', resize)
+    self.addEvent(window, 'resize', resize)
     self.resize = resize;
 }
 PicList.prototype.addPics = function(picUrls, isClear) {
@@ -367,7 +367,7 @@ if (!Array.prototype.forEach) {
     };
 }
 
-function addEvent(obj, sEv, fn) {
+PicList.prototype.addEvent =function(obj, sEv, fn) {
     if (obj.addEventListener) {
         obj.addEventListener(sEv, fn, false);
     } else {
@@ -379,7 +379,7 @@ function addEvent(obj, sEv, fn) {
 }
 
 
-function getScrollWidth() {
+PicList.prototype.getScrollWidth = function() {
   var noScroll, scroll, oDiv = document.createElement("DIV");
   oDiv.style.cssText = "position:absolute; top:-1000px; width:100px; height:100px; overflow:hidden;";
   noScroll = document.body.appendChild(oDiv).clientWidth;
