@@ -117,29 +117,29 @@
     var urls1 = [
         "http://n1.image.pg0.cn/222T1mqVKBsAH1RCvBVdK222.jpg",
         "http://n2.image.pg0.cn/T1uyhVB4Di1RCvBVdK.jpg",
-        "http://n2.image.pg0.cn/T1AOWyB4Kf1RCvBVdK.jpg","c3.jpg","k1.jpg","k1.jpg","x1.jpg","x2.jpg","c3.jpg","c3.jpg","k1.jpg","c3.jpg","c3.jpg","x3.jpg","x4.jpg",
+        "http://n2.image.pg0.cn/T1AOWyB4Kf1RCvBVdK.jpg", "c3.jpg", "k1.jpg", "k1.jpg", "x1.jpg", "x2.jpg", "c3.jpg", "c3.jpg", "k1.jpg", "c3.jpg", "c3.jpg", "x3.jpg", "x4.jpg",
         "http://n3.image.pg0.cn/T1rbDqBjYo1RCvBVdK.jpg",
-        "http://n5.image.pg0.cn/T1QOAGB5xC1RCvBVdK.jpg","c2.jpg","c2.jpg","k1.jpg","c2.jpg","c2.jpg","c2.jpg","x1.jpg",
-        "http://n2.image.pg0.cn/T1.xLABgK51RCvBVdK.jpg","x4.jpg",
+        "http://n5.image.pg0.cn/T1QOAGB5xC1RCvBVdK.jpg", "c2.jpg", "c2.jpg", "k1.jpg", "c2.jpg", "c2.jpg", "c2.jpg", "x1.jpg",
+        "http://n2.image.pg0.cn/T1.xLABgK51RCvBVdK.jpg", "x4.jpg",
         "http://n3.image.pg0.cn/T1O8LQBvCl1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg"
     ]
     var urls10 = [
         "http://n1.image.pg0.cn/222T1mqVKBsAH1RCvBVdK222.jpg",
         "c1.jpg",
-        "c2.jpg","x4.jpg","x1.jpg",
-        "http://n2.image.pg0.cn/T1uyhVB4Di1RCvBVdK.jpg","k3.jpg",
+        "c2.jpg", "x4.jpg", "x1.jpg",
+        "http://n2.image.pg0.cn/T1uyhVB4Di1RCvBVdK.jpg", "k3.jpg",
         "c3.jpg",
-        "http://n2.image.pg0.cn/T1AOWyB4Kf1RCvBVdK.jpg","k2.jpg",
+        "http://n2.image.pg0.cn/T1AOWyB4Kf1RCvBVdK.jpg", "k2.jpg",
         "http://n3.image.pg0.cn/T1rbDqBjYo1RCvBVdK.jpg",
-        "http://n5.image.pg0.cn/T1QOAGB5xC1RCvBVdK.jpg","c1.jpg","k1.jpg","c1.jpg","c1.jpg","c1.jpg",
+        "http://n5.image.pg0.cn/T1QOAGB5xC1RCvBVdK.jpg", "c1.jpg", "k1.jpg", "c1.jpg", "c1.jpg", "c1.jpg",
         "http://n2.image.pg0.cn/T1.xLABgK51RCvBVdK.jpg",
         "http://n3.image.pg0.cn/T1O8LQBvCl1RCvBVdK.jpg", "k4.jpg",
-        "http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg","c1.jpg","c1.jpg","c2.jpg",
+        "http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg", "c1.jpg", "c1.jpg", "c2.jpg",
 
-        "http://www.quanjing.com/image/2016index/j2.jpg?v=001", "http://www.quanjing.com/image/2016index/j3.jpg?v=001", "http://www.quanjing.com/image/2016index/j4.jpg?v=001", "http://www.quanjing.com/image/2016index/j5.jpg?v=001", "http://www.quanjing.com/image/2016index/ico_gryy.jpg?v=001", "http://www.quanjing.com/image/2016index/gryy1.jpg?v=02", "http://www.quanjing.com/image/2016index/gryy2.jpg?v=02", "http://www.quanjing.com/image/2016index/gryy3.jpg?v=02", "http://www.quanjing.com/image/2016index/ico_ppt.jpg?v=001", "http://www.quanjing.com/image/2016index/ppt1.jpg?v=02", "http://www.quanjing.com/image/2016index/ppt2.jpg?v=02", 
+        "http://www.quanjing.com/image/2016index/j2.jpg?v=001", "http://www.quanjing.com/image/2016index/j3.jpg?v=001", "http://www.quanjing.com/image/2016index/j4.jpg?v=001", "http://www.quanjing.com/image/2016index/j5.jpg?v=001", "http://www.quanjing.com/image/2016index/ico_gryy.jpg?v=001", "http://www.quanjing.com/image/2016index/gryy1.jpg?v=02", "http://www.quanjing.com/image/2016index/gryy2.jpg?v=02", "http://www.quanjing.com/image/2016index/gryy3.jpg?v=02", "http://www.quanjing.com/image/2016index/ico_ppt.jpg?v=001", "http://www.quanjing.com/image/2016index/ppt1.jpg?v=02", "http://www.quanjing.com/image/2016index/ppt2.jpg?v=02",
         "x1.jpg",
 
-                "c1.jpg",
+        "c1.jpg",
         "k1.jpg"
 
     ]
@@ -156,6 +156,14 @@
                 div.style.background = "black";
             })
         })
+        picsObj.addPics(urls10)
+
+            .after(function(divs) {
+                console.log(2, divs)
+                divs.forEach(function(div) {
+                    div.style.background = "green";
+                })
+            })        
         picsObj.addPics(urls1)
 
             .after(function(divs) {
@@ -164,14 +172,7 @@
                     div.style.background = "red";
                 })
             })
-        picsObj.addPics(urls10)
 
-            .after(function(divs) {
-                console.log(2, divs)
-                divs.forEach(function(div) {
-                    div.style.background = "green";
-                })
-            })
     }
     </script>
 </body>

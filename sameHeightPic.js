@@ -26,12 +26,13 @@ var picsObj = new PicList(box,standHeight,gap)
         self.gap = parseInt(gap || 10);
         self.boxWidth = self.getCoWidth(box);
         self.lefts = [];
-
+        self.lastSecLineRate = 0;
         self.queues = [];
 
         self.maxWidth = 500; //长图阈值。
         function resize() {
             self.readysResize();
+            self.changeLefts();//修改最后一行的高度
         }
         addEvent(window, 'resize', resize)
         self.resize = resize;
@@ -106,15 +107,56 @@ var picsObj = new PicList(box,standHeight,gap)
                 queueObj.fn && queueObj.fn(queueObj.picWraps); //执行回调;
                 self.readysResize(self.pics); // 防止撑出滚动条，需重新监测
                 next = true;
+                return;
             } else {
                 return;
             }
         })
         if (next) {
             self.queues.shift();
-            self.excuteQueue()
+
+            if(self.queues.length==0){// 最后一批图片已插入， 对lefts 里的图片高度做试探性放大，横向铺满。
+                
+                self.changeLefts();
+            }else{
+                self.excuteQueue()                
+            }
         }
     }
+    PicList.prototype.changeLefts = function(){
+
+            //首先让遗留的和倒数第二行高度相同，但如果高度相同后,宽度超过boxWidth 那么就走else       
+        var self = this;
+        var boxWidth = self.getCoWidth(self.box);
+
+        var rate = self.lastSecLineRate;
+
+        var totalWidh = 0;
+
+        self.lefts.forEach(function(item) {
+            totalWidh+=((item.wWidth / rate)+self.gap);
+        })
+
+
+        if(totalWidh>boxWidth){
+            totalWidh =0;
+            self.lefts.forEach(function(pic){
+                totalWidh += (pic.wWidth + self.gap);
+            })
+            rate = ( totalWidh - self.lefts.length * self.gap) / (boxWidth - self.lefts.length * self.gap);
+        }
+
+        self.lefts.forEach(function(item) {
+            item.wWidth = item.wWidth / rate;
+            item.wHeight = item.wWidth / item.wRate;
+
+            item.parentNode.style.maxWidth = self.boxWidth - self.gap + 'px'
+            item.parentNode.style.width = item.wWidth + 'px';
+            item.parentNode.style.height = item.wHeight + 'px';
+            item.parentNode.style.lineHeight = item.wHeight + 'px';
+        })
+    }
+
 
     PicList.prototype.getCoWidth = function(obj) {
         return obj.clientWidth - 2 // 修正clientWidth宽度
@@ -207,6 +249,7 @@ var picsObj = new PicList(box,standHeight,gap)
                 } else {
                     var rate = (totalWidh - pic.wWidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
 
+                    self.lastSecLineRate = rate;
                     temp.forEach(function(item) {
                         item.wWidth = item.wWidth / rate;
                         item.wHeight = item.wWidth / item.wRate;
@@ -301,6 +344,7 @@ var picsObj = new PicList(box,standHeight,gap)
                     } else {
                         var rate = (totalWidh - pic.wWidth - self.gap - temp.length * self.gap) / (boxWidth - temp.length * self.gap);
 
+                        self.lastSecLineRate = rate;
                         temp.forEach(function(item) {
                             item.wWidth = item.wWidth / rate;
                             item.wHeight = item.wWidth / item.wRate;
