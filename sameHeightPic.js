@@ -131,6 +131,9 @@ var picsObj = new PicList(box,standHeight,gap)
 
         var rate = self.lastSecLineRate;
 
+        if(rate ==0){//图片少不足一行，则标准高度，不做处理
+            return;
+        }
         var totalWidh = 0;
 
         self.lefts.forEach(function(item) {
