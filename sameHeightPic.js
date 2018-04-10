@@ -30,9 +30,9 @@ var picsObj = new PicList(box,standHeight,gap)
         self.queues = [];
 
         self.maxWidth = 500; //长图阈值。
-        function resize() {
-            self.readysResize();
-            self.changeLefts();//修改最后一行的高度
+        function resize(delFlag) {
+            self.readysResize(delFlag);
+            self.changeLefts(); //修改最后一行的高度
         }
         addEvent(window, 'resize', resize)
         self.resize = resize;
@@ -98,6 +98,27 @@ var picsObj = new PicList(box,standHeight,gap)
             }
         }
     };
+    PicList.prototype.deletePic = function(image){
+        var  self = this;
+        self.pics.forEach(function(img, index) {
+            if (img == image) {
+                self.pics.splice(index, 1);
+                return;
+            }
+        })
+        self.lefts.forEach(function(img, index) {
+            if (img == image) {
+                self.pics.splice(index, 1);
+                return;
+            }
+        })
+
+        self.box.removeChild(image.parentNode);
+
+        self.resize(true);
+
+    }
+
     PicList.prototype.excuteQueue = function() {
         var self = this;
         var next = false;
@@ -115,38 +136,38 @@ var picsObj = new PicList(box,standHeight,gap)
         if (next) {
             self.queues.shift();
 
-            if(self.queues.length==0){// 最后一批图片已插入， 对lefts 里的图片高度做试探性放大，横向铺满。
-                
+            if (self.queues.length == 0) { // 最后一批图片已插入， 对lefts 里的图片高度做试探性放大，横向铺满。
+
                 self.changeLefts();
-            }else{
-                self.excuteQueue()                
+            } else {
+                self.excuteQueue()
             }
         }
-    }
-    PicList.prototype.changeLefts = function(){
+    };
+    PicList.prototype.changeLefts = function() {
 
-            //首先让遗留的和倒数第二行高度相同，但如果高度相同后,宽度超过boxWidth 那么就走else       
+        //首先让遗留的和倒数第二行高度相同，但如果高度相同后,宽度超过boxWidth 那么就走else       
         var self = this;
         var boxWidth = self.getCoWidth(self.box);
 
         var rate = self.lastSecLineRate;
 
-        if(rate ==0){//图片少不足一行，则标准高度，不做处理
+        if (rate == 0) { //图片少不足一行，则标准高度，不做处理
             return;
         }
         var totalWidh = 0;
 
         self.lefts.forEach(function(item) {
-            totalWidh+=((item.wWidth / rate)+self.gap);
+            totalWidh += ((item.wWidth / rate) + self.gap);
         })
 
 
-        if(totalWidh>boxWidth){
-            totalWidh =0;
-            self.lefts.forEach(function(pic){
+        if (totalWidh > boxWidth) {
+            totalWidh = 0;
+            self.lefts.forEach(function(pic) {
                 totalWidh += (pic.wWidth + self.gap);
             })
-            rate = ( totalWidh - self.lefts.length * self.gap) / (boxWidth - self.lefts.length * self.gap);
+            rate = (totalWidh - self.lefts.length * self.gap) / (boxWidth - self.lefts.length * self.gap);
         }
 
         self.lefts.forEach(function(item) {
@@ -158,9 +179,7 @@ var picsObj = new PicList(box,standHeight,gap)
             item.parentNode.style.height = item.wHeight + 'px';
             item.parentNode.style.lineHeight = item.wHeight + 'px';
         })
-    }
-
-
+    };
     PicList.prototype.getCoWidth = function(obj) {
         return obj.clientWidth - 2 // 修正clientWidth宽度
     }
@@ -304,7 +323,7 @@ var picsObj = new PicList(box,standHeight,gap)
         })
     }
 
-    PicList.prototype.readysResize = function() {
+    PicList.prototype.readysResize = function(delFlag) {
 
         var self = this;
 
@@ -313,7 +332,7 @@ var picsObj = new PicList(box,standHeight,gap)
         }
         var width = self.getCoWidth(self.box);
 
-        if (width !== self.boxWidth) {
+        if (width !== self.boxWidth||delFlag) {
             self.boxWidth = width;
             var pics = self.pics;
             var standHeight = self.standHeight;
@@ -415,6 +434,7 @@ var picsObj = new PicList(box,standHeight,gap)
             }
         };
     }
+
     function addEvent(obj, sEv, fn) {
         if (obj.addEventListener) {
             obj.addEventListener(sEv, fn, false);
@@ -434,5 +454,5 @@ var picsObj = new PicList(box,standHeight,gap)
         document.body.removeChild(oDiv);
         return noScroll - scroll;
     }*/
-    window.PicList = window.PicList||PicList;
+    window.PicList = window.PicList || PicList;
 })(window);
