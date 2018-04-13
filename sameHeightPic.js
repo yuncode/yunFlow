@@ -30,9 +30,11 @@ var picsObj = new PicList(box,standHeight,gap)
         self.queues = [];
 
         self.maxWidth = 500; //长图阈值。
-        function resize(delFlag) {
-            self.readysResize(delFlag);
-            self.changeLefts(); //修改最后一行的高度
+        function resize(delFlag) {     //resize 方法可以用来重新布局。
+            var isWidthChange = self.readysResize(delFlag);
+             if(isWidthChange){
+                self.changeLefts(); //修改最后一行的高度
+             }
         }
         addEvent(window, 'resize', resize)
         self.resize = resize;
@@ -398,6 +400,7 @@ var picsObj = new PicList(box,standHeight,gap)
             } else {
                 self.readysResize();
             }
+            return true;
         } else {
             return;
         }
