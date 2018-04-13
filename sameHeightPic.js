@@ -108,7 +108,7 @@ var picsObj = new PicList(box,standHeight,gap)
         })
         self.lefts.forEach(function(img, index) {
             if (img == image) {
-                self.pics.splice(index, 1);
+                self.lefts.splice(index, 1);
                 return;
             }
         })
@@ -126,7 +126,7 @@ var picsObj = new PicList(box,standHeight,gap)
             if (index == 0 && queueObj.over) {
                 self.readys(queueObj); //插入box
                 queueObj.fn && queueObj.fn(queueObj.picWraps); //执行回调;
-                self.readysResize(self.pics); // 防止撑出滚动条，需重新监测
+                self.readysResize(); // 防止撑出滚动条，需重新监测
                 next = true;
                 return;
             } else {
@@ -162,7 +162,7 @@ var picsObj = new PicList(box,standHeight,gap)
         })
 
 
-        if (totalWidh > boxWidth) {
+        if (totalWidh > boxWidth*2/3) {
             totalWidh = 0;
             self.lefts.forEach(function(pic) {
                 totalWidh += (pic.wWidth + self.gap);
