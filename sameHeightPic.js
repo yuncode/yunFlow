@@ -16,6 +16,8 @@ var picsObj = new PicList(box,standHeight,gap)
     picsObj.destory()
 */
 
+//picUrls 为空数组的情况 .after不走回调 需排查
+
 (function(window, undefined) {
 
     function PicList(box, standHeight, gap) {
@@ -50,9 +52,16 @@ var picsObj = new PicList(box,standHeight,gap)
         var queueObj = { timer: null, over: false, pics: [], picWraps: [] }
         self.queues.push(queueObj);
 
-        picUrls.forEach(function(url, index) {
+        picUrls.forEach(function(urlObj, index) {
             var image = document.createElement('img');
-            image.src = url;
+            if(typeof urlObj==='string'){
+                image.src = urlObj
+            }else if(typeof urlObj==='object'){
+                image.src = urlObj.url;
+                image.oData = urlObj.oData;
+            }else{
+                return
+            }
             pics.push(image);
             picChecks.push(image);
             image.onerror = function() {
@@ -75,9 +84,7 @@ var picsObj = new PicList(box,standHeight,gap)
 
                 queueObj.over = true; //图片已就绪，等待插入
                 queueObj.pics = pics;
-
                 self.excuteQueue();
-
                 return;
             } else {
                 picChecks.forEach(function(img, index) {
@@ -91,7 +98,9 @@ var picsObj = new PicList(box,standHeight,gap)
                 queueObj.timer = setTimeout(check, 40);
             }
         }
-        check();
+        setTimeout(function(){
+            check();
+        },0)
         return {
             after: function(fn) {
                 if (fn) {
