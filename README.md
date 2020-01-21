@@ -33,3 +33,9 @@
 	
 ### 【3】清空图片
   `picsObj.clearPics()`
+
+### 【4】销毁, box 未清空
+`picsObj.destory()`
+
+### 【5】刷新。box尺寸变动时，布局会混乱，需手动调用，重新计算图片布局
+ `picsObj.resize()`
