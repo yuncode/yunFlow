@@ -14,6 +14,9 @@ var picsObj = new PicList(box,standHeight,gap)
 
 【4】//销毁, box 未清空
     picsObj.destory()
+
+【5】//box尺寸变动时，布局会混乱，需手动调用，重新计算图片布局
+    picsObj.resize()
 */
 
 //picUrls 为空数组的情况 .after不走回调 需排查
@@ -22,12 +25,12 @@ var picsObj = new PicList(box,standHeight,gap)
 
     function PicList(box, standHeight, gap) {
         var self = this;
-        self.pics = []; //已插入box 的图片
+        self.pics = []; //实例 所有插入box 的图片
         self.standHeight = parseInt(standHeight || 150);
         self.box = box;
         self.gap = parseInt(gap || 10);
         self.boxWidth = self.getCoWidth(box);
-        self.lefts = [];
+        self.lefts = []; //box 里的图片最后不足一行，余留的。
         self.lastSecLineRate = 0;
         self.queues = [];
 
