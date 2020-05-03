@@ -10,6 +10,13 @@
 	4.现代浏览器 及 >=ie8。
 
 项目展示页面 https://yuncode.github.io/yunFlow/
+### 【0】安装引入
+yunFlow 为全局引入，只需引入一次。
+`npm install yunFlow`  
+`import yunFlow`  
+或者
+`<script type="text/javascript" src="sameHeightPic.js"></script> //请确保 src路径写对` 
+
 
 ### 【1】创建实例 
 `var picsObj = new PicList(box,config) `  
