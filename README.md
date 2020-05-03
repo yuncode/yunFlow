@@ -12,11 +12,13 @@
 项目展示页面 https://yuncode.github.io/yunFlow/
 
 ### 【1】创建实例 
-`var picsObj = new PicList(box,standHeight,gap) `  
+`var picsObj = new PicList(box,config) `  
     
-* 	box 为图片盒子，     
+* 	box 为图片盒子，   
+*	config 为{standHeight,gap,isShowFail}   默认为{150,10，false}
 * 	standHeight 为设置基准高度。     
 * 	gap为图片间间隙。    
+*	isShowFail是否显示 加载失败的图片
 
 
 

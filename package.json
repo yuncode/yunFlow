@@ -1,6 +1,6 @@
 {
   "name": "yunflow",
-  "version": "1.3.6",
+  "version": "1.4.0",
   "description": "图片等高瀑布流，图片横向瀑布流",
   "main": "sameHeightPic.js",
   "homepage":"https://github.com/yuncode/yunFlow",

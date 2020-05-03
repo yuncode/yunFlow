@@ -1,8 +1,9 @@
 /*
 【1】//创建实例 
-//box 为图片盒子，standHeight 为设置基准高度。gap为图片间间隙
-var picsObj = new PicList(box,standHeight,gap) 
+//box 为图片盒子，standHeight 为设置基准高度。gap为图片间间隙 。isShowFail 为是否显示失败图片
+var picsObj = new PicList(box,config) 
 
+config 为 { standHeight,gap, isShowFail } //默认为{150,10，false}
 
 【2】添加图片；
     picUrls 为图片地址数组,  true表示清空后插入，false（默认）为在box里追加。 after可选，为插入图片后的回调。 
@@ -23,12 +24,14 @@ var picsObj = new PicList(box,standHeight,gap)
 
 (function(window, undefined) {
 
-    function PicList(box, standHeight, gap) {
+    function PicList(box, config) {
         var self = this;
         self.pics = []; //实例 所有插入box 的图片
-        self.standHeight = parseInt(standHeight || 150);
+        config = config||{};
+        self.standHeight = parseInt(config.standHeight || 150);
         self.box = box;
-        self.gap = parseInt(gap || 10);
+        self.gap = parseInt(config.gap || 10);
+        self.isShowFail = config.isShowFail||false;
         self.boxWidth = self.getCoWidth(box);
         self.lefts = []; //box 里的图片最后不足一行，余留的。
         self.lastSecLineRate = 0;
@@ -75,7 +78,14 @@ var picsObj = new PicList(box,standHeight,gap)
                 })
                 pics.forEach(function(img, index) {
                     if (img == image) {
-                        pics.splice(index, 1);
+                        if(self.isShowFail){//  显示失败图片
+                            img.ogRate = 1;
+                            img.ogWidth = self.standHeight;
+                            img.ogHeight = self.standHeight;                            
+                        }else{
+                            pics.splice(index, 1);
+                        }
+
                     }
                 })
             }
