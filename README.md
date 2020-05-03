@@ -12,9 +12,12 @@
 项目展示页面 https://yuncode.github.io/yunFlow/
 ### 【0】安装引入
 yunFlow 为全局引入，只需引入一次。
-`npm install yunFlow`  
-`import yunFlow`  
+
+`npm install yunFlow --save`  
+`import 'yunFlow'`  
+
 或者
+
 `<script type="text/javascript" src="sameHeightPic.js"></script> //请确保 src路径写对` 
 
 
