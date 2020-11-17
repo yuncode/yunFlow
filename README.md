@@ -11,13 +11,12 @@
 
 项目展示页面 https://yuncode.github.io/yunFlow/
 ### 【0】安装引入
-yunFlow 为全局引入，只需引入一次。
+node 安装并引入 
+安装：`npm install yunFlow --save`  
+引入：`import PicList from 'yunFlow'`  
 
-`npm install yunFlow --save`  
-`import 'yunFlow'`  
-
-或者
-
+或者 
+浏览器直接js引入：
 `<script type="text/javascript" src="sameHeightPic.js"></script> //请确保 src路径写对` 
 
 

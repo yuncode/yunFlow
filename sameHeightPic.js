@@ -22,7 +22,13 @@ config 为 { standHeight,gap, isShowFail } //默认为{150,10，false}
 
 //picUrls 为空数组的情况 .after不走回调 需排查
 
-(function(window, undefined) {
+
+
+(function(global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+        typeof define === 'function' && define.amd ? define(factory) :
+        (global.PicList = factory());
+}(this, (function() {
 
     function PicList(box, config) {
         var self = this;
@@ -479,5 +485,6 @@ config 为 { standHeight,gap, isShowFail } //默认为{150,10，false}
         document.body.removeChild(oDiv);
         return noScroll - scroll;
     }*/
-    window.PicList = window.PicList || PicList;
-})(window);
+    return PicList;
+
+})));
