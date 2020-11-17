@@ -13,7 +13,7 @@
 项目展示页面 https://yuncode.github.io/yunFlow/
 
 ### 【1】创建实例 
-`var picsObj = new PicList(box,standHeight,gap) `  
+`var picsObj = new PicList(box,{standHeight:100,gap:20}) `  
 box 为图片盒子，standHeight 为设置基准高度。gap为图片间间隙。
 
 

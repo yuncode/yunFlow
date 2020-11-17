@@ -75,7 +75,10 @@
             <br>
             <img src="weixin.png">    
             <br>
-            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=1&id=1678955&auto=1&height=32"></iframe>       
+            <div>
+                友情推荐：<br>
+                <a href="https://yunyouni.com"  target="_blank">云有你网址管家，再也不怕丢失网址了。yunyouni.com</a>
+            </div>     
         </div>
     </div>
     <script type="text/javascript">
@@ -211,7 +214,7 @@
         "http://n3.image.pg0.cn/T1O8LQBvCl1RCvBVdK.jpg", "http://n3.image.pg0.cn/T1FGd4Bj_V1RCvBVdK.jpg"
 
     ];
-    var picsObj = new PicList(document.getElementById('box'), 100, 10)
+    var picsObj = new PicList(document.getElementById('box'), {standHeight:100,gap:10, isShowFail:true })
     window.onload = function(argument) {
          picsObj.addPics(urls0)
 
